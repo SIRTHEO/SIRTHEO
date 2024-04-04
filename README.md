@@ -1,7 +1,3 @@
-# 💫 About Me:
-- 🔭 I’m currently focus on **Dhatium**
-
-
 ## 🌐 Socials:
 [![Discord](https://img.shields.io/badge/Discord-%237289DA.svg?logo=discord&logoColor=white)](https://discord.gg/https://discord.gg/discord.gg/srpqxYyjCy) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/https://www.linkedin.com/in/matteo-di-mattia-0b9028225/) 
 
