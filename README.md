@@ -1,6 +1,6 @@
-<h3 align="center">Hi, i'm Matteo Di Mattia aka SIRTHEO</h3>
+<h3 align="center">Hi, i'm SIRTHEO 🇮🇹</h3>
 
-- 🔭 I’m currently working on **Atena** an roleplay server.
+- 🔭 I’m currently focus on **Dhatium**.
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">Join in my discord server communirt:
