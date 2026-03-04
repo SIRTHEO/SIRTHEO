@@ -10,15 +10,6 @@ motto: "building things that automate things"
 
 ---
 
-### `> now`
-
-🔧 **[claude-switch](https://github.com/SIRTHEO/claude-switch)** — Zsh wrapper to seamlessly switch between Claude Code accounts
-🔄 **Airtable ↔ Supabase Sync** — Bidirectional data sync engine powered by n8n
-💰 **Finance App** — Personal finance tracker built with modern web stack
-🤖 **Mastra Agents** — AI agent experiments with the Mastra framework
-
----
-
 ### `> stack`
 
 **Languages I think in**
