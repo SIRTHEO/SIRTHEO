@@ -1,4 +1,4 @@
-name: contributions
+name: refresh
 
 on:
   schedule:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  render:
+  refresh:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +17,13 @@ jobs:
         with:
           python-version: "3.12"
       - run: python3 scripts/render_contributions.py "${{ github.repository_owner }}"
+      - run: python3 scripts/update_log.py
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: commit if changed
         run: |
-          git add assets/contributions-*.svg
+          git add assets/tide-*.svg README.md
           git diff --cached --quiet && exit 0
           git -c user.name=github-actions[bot] -c user.email=41898282+github-actions[bot]@users.noreply.github.com \
-            commit -m "chore: refresh contribution calendar [skip ci]"
+            commit -m "chore: redraw the tide chart and the log [skip ci]"
           git push

@@ -1,29 +1,49 @@
-# Matteo Di Mattia
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+  <img alt="Matteo Di Mattia · full-stack engineer" src="assets/hero-light.svg" width="860">
+</picture>
 
-**Full-stack engineer · SIRTHEO**<br>
+I build web products end to end: chat bots on WhatsApp, React interfaces, the
+Postgres underneath. Lately most of my time goes into one problem: making AI
+coding agents dependable enough to hand real work to. Steps you can read,
+results you can measure, a stop button that works.
+
 [LinkedIn](https://linkedin.com/in/matteodimattia)
 
-I build web products end to end, from conversational WhatsApp bots to React interfaces and Postgres databases. My main focus is making **AI coding agents reliable—and measuring how well they work**.
+## Ship's log · what I'm building
 
-### Building now: [sailor](https://github.com/SIRTHEO/sailor)
+**[sailor](https://github.com/SIRTHEO/sailor)** · Rust · work in progress<br>
+Makes the command-line coding agents you already use work together, inside
+flows you can read, measure and stop.
 
-A Rust project that helps the command-line agents you already use work together, with steps you can read, results you can measure, and execution you can stop. **Work in progress.**
+<!-- log:start -->
+> **Latest log entry** · Sep 6, 2026 · [docs(readme): the comment debt is paid, and the README says the number](https://github.com/SIRTHEO/sailor/commit/a4a62cd283d1e90e07e4e8dc412d1043f3b1127b)
+<!-- log:end -->
 
-### How I work
+## Bearings · how I work
 
-Measure before deciding. Fix the root cause. Write code and commits for the person reading them six months from now.
+- **Measure before deciding.** A number beats an opinion. Two identical numbers
+  usually mean the change never ran.
+- **Fix the cause, not the symptom.** No cleanup job for a mess that should not
+  have been made in the first place.
+- **Leave the lines tidy.** Code and commits written for whoever comes aboard
+  in six months. Usually me.
 
-Design matters to me: consistent design systems, considered typography, and thoughtful motion. Outside work, I’m a gamer and modder.
+## In the hold · tools
 
-### Tools I use
+| | |
+|---|---|
+| Languages | Rust · TypeScript · Lua |
+| Web & data | React · TanStack · Node · Postgres · Supabase · Prisma |
+| Build & design | Docker · GitHub Actions · Figma |
 
-**Languages** · Rust, TypeScript, Lua<br>
-**Web & data** · React, TanStack, Node, Postgres, Supabase, Prisma<br>
-**Build & design** · Docker, GitHub Actions, Figma
+## Ashore · off hours
 
----
+Gamer and modder. I optimize systems for fun, real and virtual.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/contributions-dark.svg">
-  <img alt="GitHub contributions over the last 12 months" src="assets/contributions-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/tide-dark.svg">
+  <img alt="Tide chart: weekly GitHub activity over the last 52 weeks" src="assets/tide-light.svg" width="860">
 </picture>
+
+<sub>Everything on this page is drawn by two small scripts in this repo and redrawn every night. No third-party widgets.</sub>

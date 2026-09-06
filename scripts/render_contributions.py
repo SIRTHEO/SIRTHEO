@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Render assets/contributions-{dark,light}.svg from the public contribution
-calendar. No token: it reads the same page the profile shows. Runs daily from
-.github/workflows/contributions.yml.
+"""Render assets/tide-{dark,light}.svg: GitHub activity as a tide chart,
+one point per week over the last 52 weeks.
+
+No token: it reads the public contribution calendar the profile shows.
+Runs nightly from .github/workflows/refresh.yml.
 """
 import re
 import sys
@@ -10,53 +12,102 @@ from datetime import date, timedelta
 from pathlib import Path
 
 USER = sys.argv[1] if len(sys.argv) > 1 else "SIRTHEO"
-CELL, GAP, PAD = 11, 3, 14
-PALETTE = {
-    "dark": ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-    "light": ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+W, H = 860, 220
+L, R, TOP, BASE = 40, 820, 40, 160
+FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+THEMES = {
+    "dark": dict(line="#60a5fa", fill="#1d4ed8", text="#e6edf3", muted="#9aa4b2", grid="#30363d"),
+    "light": dict(line="#2563eb", fill="#93c5fd", text="#1f2328", muted="#59636e", grid="#d0d7de"),
 }
-TEXT = {"dark": "#8b949e", "light": "#59636e"}
 
 
 def fetch_days() -> dict:
     url = f"https://github.com/users/{USER}/contributions"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (profile-readme)"})
-    html = urllib.request.urlopen(req, timeout=30).read().decode()
+    for attempt in range(3):  # the page is large and the read occasionally comes back short
+        try:
+            html = urllib.request.urlopen(req, timeout=30).read().decode()
+            break
+        except Exception:
+            if attempt == 2:
+                raise
+    ids = {m.group(2): (date.fromisoformat(m.group(1)), int(m.group(3)))
+           for m in re.finditer(r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*?id="([^"]+)"[^>]*data-level="(\d)"', html)}
+    if not ids:  # attribute order may differ
+        ids = {m.group(1): (date.fromisoformat(m.group(2)), int(m.group(3)))
+               for m in re.finditer(r'id="([^"]+)"[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"', html)}
+    counts = {}
+    for m in re.finditer(r'<tool-tip[^>]*for="([^"]+)"[^>]*>\s*(No|\d+) contributions?', html):
+        counts[m.group(1)] = 0 if m.group(2) == "No" else int(m.group(2))
     days = {}
-    for m in re.finditer(r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"', html):
-        days[date.fromisoformat(m.group(1))] = int(m.group(2))
+    for cid, (d, level) in ids.items():
+        days[d] = counts.get(cid, level)  # level as a fallback if tooltips move
     if not days:
         raise SystemExit("no contribution cells found: the page layout changed")
     return days
 
 
-def render(days: dict, theme: str) -> str:
+def weekly(days: dict) -> list[tuple[date, int]]:
     last = max(days)
-    first = last - timedelta(days=last.weekday() + 1 + 52 * 7)  # sunday, 53 weeks back
-    weeks = 53
-    width = PAD * 2 + weeks * (CELL + GAP) - GAP
-    height = PAD * 2 + 7 * (CELL + GAP) - GAP + 18
-    total = sum(1 for d, lvl in days.items() if d > last - timedelta(days=365) and lvl > 0)
-    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="Contribution calendar">']
-    d = first
-    for w in range(weeks):
-        for r in range(7):
-            if d <= last:
-                lvl = days.get(d, 0)
-                x, y = PAD + w * (CELL + GAP), PAD + r * (CELL + GAP)
-                delay = (w + r) * 0.018
-                out.append(f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="2" fill="{PALETTE[theme][lvl]}" opacity="0">'
-                           f'<animate attributeName="opacity" to="1" begin="{delay:.3f}s" dur="0.25s" fill="freeze"/></rect>')
-            d += timedelta(days=1)
-    out.append(f'<text x="{PAD}" y="{height - 6}" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" '
-               f'font-size="11" fill="{TEXT[theme]}">{total} active days in the last year · rendered {date.today().isoformat()}</text>')
-    out.append("</svg>")
-    return "\n".join(out)
+    end = last + timedelta(days=6 - (last.weekday() + 1) % 7)  # saturday of the current week
+    start = end - timedelta(days=52 * 7 - 1)
+    weeks = []
+    for i in range(52):
+        a = start + timedelta(days=7 * i)
+        weeks.append((a, sum(days.get(a + timedelta(days=k), 0) for k in range(7))))
+    return weeks
+
+
+def smooth_path(pts: list[tuple[float, float]]) -> str:
+    d = [f"M{pts[0][0]:.1f},{pts[0][1]:.1f}"]
+    for i in range(1, len(pts)):
+        (x0, y0), (x1, y1) = pts[i - 1], pts[i]
+        cx = (x0 + x1) / 2
+        d.append(f"C{cx:.1f},{y0:.1f} {cx:.1f},{y1:.1f} {x1:.1f},{y1:.1f}")
+    return " ".join(d)
+
+
+def approx_length(pts) -> float:
+    return sum(((pts[i][0] - pts[i-1][0]) ** 2 + (pts[i][1] - pts[i-1][1]) ** 2) ** 0.5 for i in range(1, len(pts))) * 1.15
+
+
+def render(weeks, theme) -> str:
+    peak = max(c for _, c in weeks) or 1
+    total = sum(c for _, c in weeks)
+    xs = [L + (R - L) * i / 51 for i in range(52)]
+    pts = [(x, BASE - (BASE - TOP) * c / peak) for x, (_, c) in zip(xs, weeks)]
+    line = smooth_path(pts)
+    area = line + f" L{R},{BASE} L{L},{BASE} Z"
+    length = approx_length(pts)
+    hi = max(range(52), key=lambda i: weeks[i][1])
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="Weekly GitHub activity, last 52 weeks">',
+         '<defs><linearGradient id="tide" x1="0" y1="0" x2="0" y2="1">'
+         f'<stop offset="0" stop-color="{theme["fill"]}" stop-opacity="0.55"/><stop offset="1" stop-color="{theme["fill"]}" stop-opacity="0.05"/></linearGradient></defs>']
+    # month ticks
+    for i, (a, _) in enumerate(weeks):
+        if a.day <= 7:
+            o.append(f'<line x1="{xs[i]:.1f}" y1="{BASE}" x2="{xs[i]:.1f}" y2="{BASE + 5}" stroke="{theme["grid"]}"/>')
+            o.append(f'<text x="{xs[i]:.1f}" y="{BASE + 20}" font-family="{FONT}" font-size="11" fill="{theme["muted"]}" text-anchor="middle">{a.strftime("%b")}</text>')
+    o.append(f'<line x1="{L}" y1="{BASE}" x2="{R}" y2="{BASE}" stroke="{theme["grid"]}"/>')
+    o.append(f'<path d="{area}" fill="url(#tide)"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.8s" fill="freeze"/></path>')
+    o.append(f'<path d="{line}" fill="none" stroke="{theme["line"]}" stroke-width="2.5" stroke-linecap="round" '
+             f'stroke-dasharray="{length:.0f}">'
+             f'<animate attributeName="stroke-dashoffset" from="{length:.0f}" to="0" begin="0.2s" dur="2.2s" fill="freeze"/></path>')
+    # high tide: a dot on the peak, the label in the top-left corner so it never leaves the frame
+    hx, hy = pts[hi]
+    o.append(f'<g><animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.5s" fill="freeze"/>'
+             f'<circle cx="{hx:.1f}" cy="{hy:.1f}" r="4.5" fill="{theme["line"]}"/>'
+             f'<text x="{L}" y="{TOP - 16}" font-family="{FONT}" font-size="12" fill="{theme["text"]}">'
+             f'High tide · {weeks[hi][1]} contributions in the week of {weeks[hi][0].strftime("%b %-d")}</text></g>')
+    o.append(f'<text x="{L}" y="{H - 12}" font-family="{FONT}" font-size="12" fill="{theme["muted"]}">'
+             f'Tide chart · {total} contributions over the last 52 weeks · redrawn {date.today().strftime("%b %-d, %Y")}</text>')
+    o.append("</svg>")
+    return "\n".join(o)
 
 
 if __name__ == "__main__":
-    days = fetch_days()
-    for theme in PALETTE:
-        path = Path(__file__).resolve().parent.parent / "assets" / f"contributions-{theme}.svg"
-        path.write_text(render(days, theme), encoding="utf-8")
-        print(f"wrote {path.name} ({len(days)} days)")
+    weeks = weekly(fetch_days())
+    for name, theme in THEMES.items():
+        path = Path(__file__).resolve().parent.parent / "assets" / f"tide-{name}.svg"
+        path.write_text(render(weeks, theme), encoding="utf-8")
+        print(f"wrote {path.name} · {sum(c for _, c in weeks)} contributions, peak {max(c for _, c in weeks)}")
