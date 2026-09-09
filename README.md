@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 7, 2026 · [perf(ratchet): the gate takes as many compilers as the machine can hold](https://github.com/SIRTHEO/sailor/commit/a8f93b1584bd1f224a5f5a744f5908918e693bae)
+> **Latest log entry** · Sep 9, 2026 · [Merge: a person can approve or reject a step that is waiting for them](https://github.com/SIRTHEO/sailor/commit/fbabb4529b96cf85a79fee4fade865981cc48cde)
 <!-- log:end -->
 
 ## Bearings · how I work
