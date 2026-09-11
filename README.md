@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 9, 2026 · [fix(flow): the command that judges a repair is fixed at launch, never by the engine](https://github.com/SIRTHEO/sailor/commit/03f4328d5d8bd071f964615dd631281f78bf0630)
+> **Latest log entry** · Sep 11, 2026 · [feat(relay): the handle a keeper wants is looked up, never assumed](https://github.com/SIRTHEO/sailor/commit/7bde057c0e3ce188b9f164e72a46f36ee737e0a0)
 <!-- log:end -->
 
 ## Bearings · how I work
