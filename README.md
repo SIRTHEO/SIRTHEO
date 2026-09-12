@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 11, 2026 · [feat(relay): the handle a keeper wants is looked up, never assumed](https://github.com/SIRTHEO/sailor/commit/7bde057c0e3ce188b9f164e72a46f36ee737e0a0)
+> **Latest log entry** · Sep 12, 2026 · [test(flow): the judge hands in its receipt](https://github.com/SIRTHEO/sailor/commit/b114da5f138c45228ea28f5ea547ea031b119886)
 <!-- log:end -->
 
 ## Bearings · how I work
