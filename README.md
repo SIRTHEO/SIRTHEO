@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 15, 2026 · [fix(toolbox): open, resume and fork a codex session outside a repository](https://github.com/SIRTHEO/sailor/commit/d79ed33238b19958830d6057a3529d078e46cba0)
+> **Latest log entry** · Sep 15, 2026 · [fix(build): take a candidate's build before its checkout, and gate at home when the shared place is shut](https://github.com/SIRTHEO/sailor/commit/b55c23d1567a55beed96dfabc012ed0936baa1a3)
 <!-- log:end -->
 
 ## Bearings · how I work
