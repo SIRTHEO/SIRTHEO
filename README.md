@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 20, 2026 · [Merge pull request #78 from SIRTHEO/work/the-index-convention-is-declared](https://github.com/SIRTHEO/sailor/commit/167fa256dbc7c78d73fde9312189b11578c482da)
+> **Latest log entry** · Sep 20, 2026 · [Merge pull request #87 from SIRTHEO/work/the-policy-is-read-once-not-four-times](https://github.com/SIRTHEO/sailor/commit/7598ae6ee3a89a959baa8bb2262357ac7e8a26c5)
 <!-- log:end -->
 
 ## Bearings · how I work
