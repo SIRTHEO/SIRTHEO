@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 20, 2026 · [Merge pull request #87 from SIRTHEO/work/the-policy-is-read-once-not-four-times](https://github.com/SIRTHEO/sailor/commit/7598ae6ee3a89a959baa8bb2262357ac7e8a26c5)
+> **Latest log entry** · Sep 22, 2026 · [Merge pull request #102 from SIRTHEO/work/the-candidate-is-gated-by-an-action](https://github.com/SIRTHEO/sailor/commit/ffa1d0f49c8e4f3c271d7707a0886cb6ace92027)
 <!-- log:end -->
 
 ## Bearings · how I work
