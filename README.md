@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 22, 2026 · [Merge pull request #102 from SIRTHEO/work/the-candidate-is-gated-by-an-action](https://github.com/SIRTHEO/sailor/commit/ffa1d0f49c8e4f3c271d7707a0886cb6ace92027)
+> **Latest log entry** · Sep 22, 2026 · [Merge pull request #145 from SIRTHEO/work/the-archive-helper-ignores-what-git-hands-it](https://github.com/SIRTHEO/sailor/commit/31d786ddeea9c70cecb07efa06d7ee12c9a77bf3)
 <!-- log:end -->
 
 ## Bearings · how I work
