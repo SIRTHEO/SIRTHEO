@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 24, 2026 · [Merge pull request #159 from SIRTHEO/work/the-walkthrough-is-a-command](https://github.com/SIRTHEO/sailor/commit/b0d6f3e4e6a91641e540774693991032ebb93471)
+> **Latest log entry** · Sep 28, 2026 · [Merge pull request #160 from SIRTHEO/work/the-relay-waits-for-what-is-open](https://github.com/SIRTHEO/sailor/commit/9d80987a7c6f738fc19c12cb0a411a3276188d9f)
 <!-- log:end -->
 
 ## Bearings · how I work
