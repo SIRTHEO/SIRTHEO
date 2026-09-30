@@ -17,7 +17,7 @@ Makes the command-line coding agents you already use work together, inside
 flows you can read, measure and stop.
 
 <!-- log:start -->
-> **Latest log entry** · Sep 28, 2026 · [Merge pull request #160 from SIRTHEO/work/the-relay-waits-for-what-is-open](https://github.com/SIRTHEO/sailor/commit/9d80987a7c6f738fc19c12cb0a411a3276188d9f)
+> **Latest log entry** · Sep 30, 2026 · [Merge pull request #171 from SIRTHEO/work/the-version-answers-to-its-flag](https://github.com/SIRTHEO/sailor/commit/46213f31e736b25370c31375bfe73da02ffbb82c)
 <!-- log:end -->
 
 ## Bearings · how I work
